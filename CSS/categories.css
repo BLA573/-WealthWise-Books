@@ -1,0 +1,11 @@
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .category-icon {
+            transition: all 0.3s ease;
+        }
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+        }

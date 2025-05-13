@@ -1,0 +1,47 @@
+
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .discount-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .search-box:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .cart-item-enter {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        .cart-item-enter-active {
+            opacity: 1;
+            transform: translateX(0);
+            transition: all 300ms ease-in;
+        }
+        .cart-item-exit {
+            opacity: 1;
+        }
+        .cart-item-exit-active {
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 300ms ease-in;
+        }
+        .cart-panel {
+            transition: transform 0.3s ease-in-out;
+        }

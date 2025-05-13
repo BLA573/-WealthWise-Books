@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthWise Books</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="CSS/about.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-book-open text-2xl text-green-600"></i>
+                <h1 class="text-2xl font-bold text-gray-800">WealthWise <span class="text-green-600">Books</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                <a href="categories.html" class="text-gray-700 hover:text-green-600 font-medium">Categories</a>
+                <a href="bestsellers.html" class="text-gray-700 hover:text-green-600 font-medium">Bestsellers</a>
+                <a href="new-releases.html" class="text-gray-700 hover:text-green-600 font-medium">New Releases</a>
+                <a href="#" class="text-green-600 font-medium">About</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-600 hover:text-green-600 relative" id="cartButton">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cartCount" class="absolute -mt-8 ml-4 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12">
+        <div class="container mx-auto px-4">
+            <!-- Hero Section -->
+            <section class="text-center mb-16">
+                <h1 class="text-4xl font-bold text-gray-800 mb-6">Our Story</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    We're just a group of students passionate about books and learning. 
+                    This is our class project turned into a fun little bookshop!
+                </p>
+            </section>
+
+            <!-- About Content -->
+            <section class="mb-16">
+                <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Why We Started</h2>
+                    <p class="text-gray-600 mb-4">
+                        For our web development class project, we wanted to build something useful and interesting. 
+                        Since we all love reading finance and self-improvement books, we decided to create WealthWise Books.
+                    </p>
+                    <p class="text-gray-600">
+                        It's not a real store (yet!), but we had fun designing it and learning along the way.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Our Mission</h2>
+                        <p class="text-gray-600">
+                             To make financial education accessible and enjoyable through carefully selected books. Our aim is to spark curiosity, promote informed decision-making, and encourage a lifelong interest in personal finance. We believe that learning about money shouldn't be boring or intimidating—it should be empowering.
+                        </p>
+
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Fun Facts</h2>
+                        <ul class="text-gray-600 space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2 fun-fact"></i>
+                                We read all the books we recommend (well, most of them)
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2 fun-fact"></i>
+                                This website was built in just 2 weeks
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2 fun-fact"></i>
+                                Our favorite book is "Rich Dad Poor Dad"
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section class="mb-16">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Meet Our Team</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Team Member 1 -->
+                    <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Hailemichael</h3>
+                        <p class="text-green-600 font-medium mb-2">Frontend Developer</p>
+                        <p class="text-gray-600 text-sm">
+                            Loves React and coffee. Built most of the website UI.
+                        </p>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Asfawesen Temtem</h3>
+                        <p class="text-green-600 font-medium mb-2">Backend Developer</p>
+                        <p class="text-gray-600 text-sm">
+                            Handled all the cart logic. Doesn't sleep much.
+                        </p>
+                    </div>
+
+                    <!-- Team Member 3 -->
+                    <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Bereket Mulugeta </h3>
+                        <p class="text-green-600 font-medium mb-2">Content Creator</p>
+                        <p class="text-gray-600 text-sm">
+                            Wrote all the book descriptions. Reads 2 books a week.
+                        </p>
+                    </div>
+
+                    <!-- Team Member 4 -->
+                    <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Endalew Gedefaw</h3>
+                        <p class="text-green-600 font-medium mb-2">Designer</p>
+                        <p class="text-gray-600 text-sm">
+                            Made everything look pretty. Obsessed with color schemes.
+                        </p>
+                    </div>
+
+                       <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Surafel Andualem</h3>
+                        <p class="text-green-600 font-medium mb-2">Designer</p>
+                        <p class="text-gray-600 text-sm">
+                            Made everything look pretty. Obsessed with color schemes.
+                        </p>
+                    </div>
+                       <div class="team-member bg-white rounded-lg shadow-md p-6 text-center transition duration-300">
+                        <div class="w-32 h-32 mx-auto mb-4 rounded-full bg-gray-200 overflow-hidden">
+                            <i class="fas fa-user text-6xl text-gray-400 mt-6"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">Surafel Tesema </h3>
+                        <p class="text-green-600 font-medium mb-2">Designer</p>
+                        <p class="text-gray-600 text-sm">
+                            Made everything look pretty. Obsessed with color schemes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Class Project Info -->
+            <section class="bg-green-50 rounded-lg p-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">This is a Class Project</h2>
+                <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+                    WealthWise Books was created for our Web Development course at University. 
+                    It's not a real business (yet!), but we're proud of what we've built!
+                </p>
+                <div class="inline-flex items-center bg-white px-4 py-2 rounded-full shadow-sm">
+                    <i class="fas fa-graduation-cap text-green-600 mr-2"></i>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="mb-6">
+                <div class="flex justify-center space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <p class="text-gray-400 text-sm">
+                &copy; 2023 WealthWise Books (Class Project). Not a real business.
+            </p>
+        </div>
+    </footer>
+</body>
+<script src="JS/about.js" ></script>
+</html>

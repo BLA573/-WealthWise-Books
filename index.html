@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthWise Books - Your Financial Knowledge Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="CSS/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-book-open text-2xl text-green-600"></i>
+                <h1 class="text-2xl font-bold text-gray-800">WealthWise <span class="text-green-600">Books</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                <a href="categories.html" class="text-gray-700 hover:text-green-600 font-medium">Categories</a>
+                <a href="bestsellers.html" class="text-gray-700 hover:text-green-600 font-medium">Bestsellers</a>
+                <a href="newreleases.html" class="text-gray-700 hover:text-green-600 font-medium">New Releases</a>
+                <a href="about.html" class="text-gray-700 hover:text-green-600 font-medium">About</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search books..." class="search-box pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:border-blue-500 w-40 md:w-64 transition-all duration-300">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <button id="cart-button" class="p-2 text-gray-600 hover:text-green-600 relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -mt-8 ml-4 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Panel (hidden by default) -->
+    <div id="cart-panel" class="cart-panel fixed top-0 right-0 h-full w-full md:w-1/3 bg-white shadow-lg transform translate-x-full z-40 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Your Cart</h2>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cart-items" class="space-y-4 mb-6">
+                <!-- Cart items will be added here dynamically -->
+                <div class="text-center text-gray-500 py-8">
+                    <i class="fas fa-shopping-cart text-4xl mb-4"></i>
+                    <p>Your cart is empty</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-200 pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Subtotal:</span>
+                    <span id="cart-subtotal" class="font-medium">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-4">
+                    <span class="text-gray-600">Shipping:</span>
+                    <span class="font-medium">Free</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold">
+                    <span>Total:</span>
+                    <span id="cart-total" class="text-green-600">$0.00</span>
+                </div>
+                <button id="checkout-button" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-medium mt-6 transition duration-300">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+    <div id="cart-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-30"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Invest in Your <span class="text-green-600"><br>Financial Future</span></h1>
+                <p class="text-lg text-gray-600 mb-8">Discover the best books on personal finance, investing, and wealth building from top financial experts.</p>
+                <div class="flex space-x-4">
+                    <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition duration-300 transform hover:scale-105">
+                        Browse Books <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                    <button class="border-2 border-green-600 text-green-600 hover:bg-green-50 px-6 py-3 rounded-lg font-medium transition duration-300">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Financial Books" class="rounded-lg shadow-xl w-full max-w-md">
+                    <div class="absolute -bottom-6 -right-6 bg-yellow-400 text-gray-900 px-6 py-2 rounded-lg shadow-lg font-bold">
+                        <i class="fas fa-tag mr-2"></i> 30% Off Today!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Explore Financial Wisdom</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-gray-100 hover:bg-green-50 rounded-xl p-6 text-center transition duration-300 cursor-pointer border border-gray-200 hover:border-green-300">
+                    <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-piggy-bank text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Personal Finance</h3>
+                    <p class="text-sm text-gray-600 mt-2">32 books</p>
+                </div>
+                <div class="bg-gray-100 hover:bg-green-50 rounded-xl p-6 text-center transition duration-300 cursor-pointer border border-gray-200 hover:border-green-300">
+                    <div class="bg-blue-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Investing</h3>
+                    <p class="text-sm text-gray-600 mt-2">28 books</p>
+                </div>
+                <div class="bg-gray-100 hover:bg-green-50 rounded-xl p-6 text-center transition duration-300 cursor-pointer border border-gray-200 hover:border-green-300">
+                    <div class="bg-purple-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-business-time text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Entrepreneurship</h3>
+                    <p class="text-sm text-gray-600 mt-2">19 books</p>
+                </div>
+                <div class="bg-gray-100 hover:bg-green-50 rounded-xl p-6 text-center transition duration-300 cursor-pointer border border-gray-200 hover:border-green-300">
+                    <div class="bg-yellow-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-brain text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="font-semibold text-gray-800">Mindset</h3>
+                    <p class="text-sm text-gray-600 mt-2">15 books</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bestselling Books -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">Bestselling Money Books</h2>
+                <a href="#" class="text-green-600 hover:text-green-700 font-medium flex items-center">
+                    View All <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Book 1 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 relative" data-id="1" data-title="Rich Dad Poor Dad" data-author="Robert T. Kiyosaki" data-price="12.99" data-original-price="17.99" data-rating="4.5" data-reviews="4782" data-image="https://m.media-amazon.com/images/I/71WS7KPTnCL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="discount-badge">-25%</div>
+                    <img src="IMG/rich-dad-poor-dad.jpg" alt="Rich Dad Poor Dad" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Rich Dad Poor Dad</h3>
+                        <p class="text-gray-600 text-sm mb-3">Robert T. Kiyosaki</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(4,782)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$12.99</span>
+                            <span class="text-sm text-gray-500 line-through">$17.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 2 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300" data-id="2" data-title="The Total Money Makeover" data-author="Dave Ramsey" data-price="14.99" data-original-price="19.99" data-rating="5" data-reviews="6341" data-image="https://m.media-amazon.com/images/I/71g2ednj0JL._AC_UF1000,1000_QL80_.jpg">
+                    <img src="IMG/The-Total-Money-Makeover.jpg" alt="The Total Money Makeover" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Total Money Makeover</h3>
+                        <p class="text-gray-600 text-sm mb-3">Dave Ramsey</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(6,341)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$14.99</span>
+                            <span class="text-sm text-gray-500 line-through">$19.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 3 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 relative" data-id="3" data-title="The Millionaire Next Door" data-author="Thomas J. Stanley" data-price="10.49" data-original-price="14.99" data-rating="4" data-reviews="3915" data-image="https://m.media-amazon.com/images/I/81bsw6fnUiL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="discount-badge">-30%</div>
+                    <img src="IMG/the-millionaire-next-door.jpg" alt="The Millionaire Next Door" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Millionaire Next Door</h3>
+                        <p class="text-gray-600 text-sm mb-3">Thomas J. Stanley</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(3,915)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$10.49</span>
+                            <span class="text-sm text-gray-500 line-through">$14.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 4 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300" data-id="4" data-title="The Psychology of Money" data-author="Morgan Housel" data-price="16.99" data-original-price="22.99" data-rating="4.5" data-reviews="5672" data-image="https://m.media-amazon.com/images/I/71XW0t4XUFL._AC_UF1000,1000_QL80_.jpg">
+                    <img src="IMG/The-Psychology-of-Money.jpg" alt="The Psychology of Money" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Psychology of Money</h3>
+                        <p class="text-gray-600 text-sm mb-3">Morgan Housel</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(5,672)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$16.99</span>
+                            <span class="text-sm text-gray-500 line-through">$22.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- More Books Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">More Financial Wisdom</h2>
+                <a href="#" class="text-green-600 hover:text-green-700 font-medium flex items-center">
+                    View All <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Book 5 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300" data-id="5" data-title="The Intelligent Investor" data-author="Benjamin Graham" data-price="18.99" data-original-price="24.99" data-rating="4.5" data-reviews="4256" data-image="https://m.media-amazon.com/images/I/91+OPuvPvIL._AC_UF1000,1000_QL80_.jpg">
+                    <img src="IMG/the-intelligent-investor.jpg" alt="The Intelligent Investor" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Intelligent Investor</h3>
+                        <p class="text-gray-600 text-sm mb-3">Benjamin Graham</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(4,256)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$18.99</span>
+                            <span class="text-sm text-gray-500 line-through">$24.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 6 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 relative" data-id="6" data-title="Think and Grow Rich" data-author="Napoleon Hill" data-price="9.99" data-original-price="14.99" data-rating="4" data-reviews="5873" data-image="https://m.media-amazon.com/images/I/71w7YEQVkVL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="discount-badge">-33%</div>
+                    <img src="IMG/think-and-grow-rich.jpg" alt="Think and Grow Rich" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Think and Grow Rich</h3>
+                        <p class="text-gray-600 text-sm mb-3">Napoleon Hill</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(5,873)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$9.99</span>
+                            <span class="text-sm text-gray-500 line-through">$14.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 7 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300" data-id="7" data-title="The Richest Man in Babylon" data-author="George S. Clason" data-price="8.49" data-original-price="12.99" data-rating="4.5" data-reviews="3215" data-image="https://m.media-amazon.com/images/I/71YHjVXyJ0L._AC_UF1000,1000_QL80_.jpg">
+                    <img src="IMG/The-Richest-Man-in-Babylon.jpg" alt="The Richest Man in Babylon" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The Richest Man in Babylon</h3>
+                        <p class="text-gray-600 text-sm mb-3">George S. Clason</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(3,215)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$8.49</span>
+                            <span class="text-sm text-gray-500 line-through">$12.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Book 8 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 relative" data-id="8" data-title="The 4-Hour Workweek" data-author="Timothy Ferriss" data-price="15.99" data-original-price="21.99" data-rating="4" data-reviews="4987" data-image="https://m.media-amazon.com/images/I/81qW97ndkvL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="discount-badge">-27%</div>
+                    <img src="https://m.media-amazon.com/images/I/81qW97ndkvL._AC_UF1000,1000_QL80_.jpg" alt="The 4-Hour Workweek" class="w-full h-64 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">The 4-Hour Workweek</h3>
+                        <p class="text-gray-600 text-sm mb-3">Timothy Ferriss</p>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(4,987)</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$15.99</span>
+                            <span class="text-sm text-gray-500 line-through">$21.99</span>
+                        </div>
+                        <button class="add-to-cart mt-4 w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300">
+                            Add to Cart <i class="fas fa-cart-plus ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Releases -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">New Releases</h2>
+                <a href="#" class="text-green-600 hover:text-green-700 font-medium flex items-center">
+                    View All <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Book 9 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 flex" data-id="9" data-title="I Will Teach You To Be Rich" data-author="Ramit Sethi" data-price="13.49" data-original-price="16.99" data-rating="4.5" data-reviews="2453" data-image="https://m.media-amazon.com/images/I/71+9UOKfZVL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="w-1/3">
+                        <img src="IMG/I-Will-Teach-You-To-Be-Rich.jpg" alt="I Will Teach You To Be Rich" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-2/3 p-5">
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mb-2 inline-block">NEW</span>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">I Will Teach You To Be Rich</h3>
+                        <p class="text-gray-600 text-xs mb-2">Ramit Sethi</p>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,453)</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">A 6-week personal finance program for 20-to-35-year-olds with a simple approach to managing money.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-md font-bold text-green-600">$13.49</span>
+                            <button class="add-to-cart text-green-600 hover:text-green-700">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Book 10 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 flex" data-id="10" data-title="Your Money or Your Life" data-author="Vicki Robin" data-price="11.99" data-original-price="14.99" data-rating="4" data-reviews="1872" data-image="https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_UF1000,1000_QL80_.jpg">
+                    <div class="w-1/3">
+                        <img src="https://m.media-amazon.com/images/I/71QKQ9mwV7L._AC_UF1000,1000_QL80_.jpg" alt="Your Money or Your Life" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-2/3 p-5">
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mb-2 inline-block">NEW</span>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">The Subtle Art of Not Giving a F*ck</h3>
+                        <p class="text-gray-600 text-xs mb-2">Mark Manson</p>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(1,872)</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">Transforming your relationship with money and achieving financial independence.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-md font-bold text-green-600">$11.99</span>
+                            <button class="add-to-cart text-green-600 hover:text-green-700">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Book 11 -->
+                <div class="bg-white rounded-xl shadow-md overflow-hidden book-card transition duration-300 flex" data-id="11" data-title="The Simple Path to Wealth" data-author="JL Collins" data-price="15.29" data-original-price="18.99" data-rating="5" data-reviews="3156" data-image="https://m.media-amazon.com/images/I/81jI-9cV2UL._AC_UF1000,1000_QL80_.jpg">
+                    <div class="w-1/3">
+                        <img src="IMG/the-smple-path-to-wealth.jpg" alt="The Simple Path to Wealth" class="w-full h-full object-cover">
+                    </div>
+                    <div class="w-2/3 p-5">
+                        <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded mb-2 inline-block">NEW</span>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">The Simple Path to Wealth</h3>
+                        <p class="text-gray-600 text-xs mb-2">JL Collins</p>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(3,156)</span>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-3 line-clamp-2">A straightforward guide to financial independence and a rich, free life.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-md font-bold text-green-600">$15.29</span>
+                            <button class="add-to-cart text-green-600 hover:text-green-700">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">What Our Readers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"The financial knowledge I gained from WealthWise Books completely transformed my approach to money. I've paid off $25,000 in debt and started investing!"</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Sarah J." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Sarah J.</h4>
+                            <p class="text-gray-500 text-sm">Financial Analyst</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"As an entrepreneur, the business and money books recommended here have been invaluable. My revenue increased by 40% after implementing strategies I learned."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael T." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Michael T.</h4>
+                            <p class="text-gray-500 text-sm">Small Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mb-6">"I wish I had found these books earlier in life. The personal finance section alone helped me save enough for a down payment on my first home."</p>
+                    <div class="flex items-center">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Jennifer L." class="w-12 h-12 rounded-full object-cover mr-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">Jennifer L.</h4>
+                            <p class="text-gray-500 text-sm">Teacher</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-green-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Get Financial Wisdom Delivered</h2>
+            <p class="text-lg mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for weekly book recommendations, exclusive discounts, and financial tips.</p>
+            <div class="flex flex-col sm:flex-row justify-center max-w-xl mx-auto">
+                <input type="email" placeholder="Your email address" class="px-4 py-3 rounded-l-lg sm:rounded-r-none rounded-r-lg sm:w-2/3 text-gray-800 focus:outline-none">
+                <button class="bg-green-800 hover:bg-green-900 px-6 py-3 rounded-r-lg sm:rounded-l-none rounded-l-lg mt-2 sm:mt-0 sm:w-1/3 font-medium transition duration-300">
+                    Subscribe <i class="fas fa-paper-plane ml-2"></i>
+                </button>
+            </div>
+            <p class="text-sm mt-4 opacity-80">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-book-open text-2xl text-green-400"></i>
+                        <h3 class="text-xl font-bold">WealthWise Books</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Your trusted source for financial knowledge and wealth-building resources.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">All Books</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">New Releases</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bestsellers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Deals & Offers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Help</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Customer Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Track Order</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Returns & Refunds</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shipping Info</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400"><i class="fas fa-map-marker-alt mr-3 text-green-400"></i> 123 Financial District, New York, NY</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-phone-alt mr-3 text-green-400"></i> (555) 123-4567</li>
+                        <li class="flex items-center text-gray-400"><i class="fas fa-envelope mr-3 text-green-400"></i> info@wealthwisebooks.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 WealthWise Books. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="JS/home.js" ></script>
+</html>

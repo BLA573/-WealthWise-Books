@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthWise Books</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/bestsellers.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Cart Notification -->
+    <div id="cartNotification" class="cart-notification hidden">
+        <span id="notificationMessage">Item added to cart!</span>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" class="cart-overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="cart-sidebar fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Your Cart</h2>
+                <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div id="cartItems" class="space-y-4">
+                <!-- Cart items will be added here dynamically -->
+                <p class="text-gray-500 text-center py-8">Your cart is empty</p>
+            </div>
+            
+            <div class="border-t border-gray-200 mt-6 pt-6">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Subtotal:</span>
+                    <span id="cartSubtotal" class="font-medium">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600">Shipping:</span>
+                    <span class="font-medium">Free</span>
+                </div>
+                <div class="flex justify-between text-lg font-bold mt-4">
+                    <span>Total:</span>
+                    <span id="cartTotal" class="text-green-600">$极速赛车开奖直播官网0.00</span>
+                </div>
+                
+                <button id="checkoutBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 px-4 rounded-lg font-medium mt-6 transition duration-300">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-book-open text-2xl text-green-600"></i>
+                <h1 class="text-2xl font-bold text-gray-800">WealthWise <span class="text-green-600">Books</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-700 hover:text-green-600 font-medium">Home</a>
+                <a href="categories.html" class="text-gray-700 hover:text-green-600 font-medium">Categories</a>
+                <a href="#" class="text-green-600 font-medium">Bestsellers</a>
+                <a href="new-releases.html" class="text-gray-700 hover:text-green-600 font-medium">New Releases</a>
+                <a href="about.html" class="text-gray-700 hover:text-green-600 font-medium">About</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input type="text" placeholder="Search books..." class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:border-blue-500 w-40 md:w-64 transition-all duration-300">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <button class="p-2 text-gray-600 hover:text-green-600 relative" id="cartButton">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cartCount" class="absolute -mt-8 ml-4 bg-green-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12">
+        <div class="container mx-auto px-4">
+            <!-- Page Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full mb-4">
+                    <span class="font-semibold">🔥 Top Selling Books</span>
+                </div>
+                <h1 class="text-4xl font-bold text-gray-800 mb-4">Financial Bestsellers</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Discover the books that are transforming lives and shaping financial futures worldwide. These top-rated titles come highly recommended by experts and readers alike.
+                </p>
+            </div>
+
+            <!-- Filter/Sort Options -->
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white p-4 rounded-lg shadow-sm">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-gray-700 mr-2">Filter by:</span>
+                    <select id="categoryFilter" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="all">All Categories</option>
+                        <option value="finance">Personal Finance</option>
+                        <option value="investing">Investing</option>
+                        <option value="entrepreneurship">Entrepreneurship</option>
+                        <option value="mindset">Mindset</option>
+                        <option value="retirement">Retirement</option>
+                        <option value="economics">Economics</option>
+                    </select>
+                </div>
+                <div>
+                    <span class="text-gray-700 mr-2">Sort by:</span>
+                    <select id="sortBy" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="bestselling">Bestselling</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Bestsellers Grid -->
+            <div id="booksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Book 1 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="finance" data-rating="4.5" data-price="12.99" data-sales="4782">
+                    <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full badge">
+                        #1 Bestseller
+                    </div>
+                    <img src="IMG/rich-dad-poor-dad.jpg" alt="Rich Dad Poor Dad" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-green-600 font-semibold">Personal Finance</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">Rich Dad Poor Dad</h3>
+                        <p class="text-sm text-gray-600 mt-1">Robert T. Kiyosaki</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(4,782)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$12.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="1" 
+                                    data-title="Rich Dad Poor Dad" 
+                                    data-price="12.99" 
+                                    data-image="https://m.media-amazon.com/images/I/71WS7KPTnCL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="investing" data-rating="5" data-price="18.99" data-sales="4256">
+                    <div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 5
+                    </div>
+                    <img src="IMG/the-intelligent-investor.jpg" alt="The Intelligent Investor" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-blue-600 font-semibold">Investing</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt极速赛车开奖直播官网-1">The Intelligent Investor</h3>
+                        <p class="text-sm text-gray-600 mt-1">Benjamin Graham</p>
+                        <div class="flex items-center mt-2">
+                            <div class="极速赛车开奖直播官网flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(4,256)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$18.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="2" 
+                                    data-title="The Intelligent Investor" 
+                                    data-price="18.99" 
+                                    data-image="https://m.media-amazon.com/images/I/91+OPuvPvIL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="finance" data-rating="4.7" data-price="14.95" data-sales="3890">
+                    <div class="absolute top-2 left-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 10
+                    </div>
+                    <img src="IMG/The-Total-Money-Makeover.jpg" alt="The Total Money Makeover" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-green-600 font-semibold">Personal Finance</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Total Money Makeover</h3>
+                        <p class="text-sm text-gray-600 mt-1">Dave Ramsey</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(3,890)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$14.95</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="3" 
+                                    data-title="The Total Money Makeover" 
+                                    data-price="14.95" 
+                                    data-image="https://m.media-amazon.com/images/I/81dQwQlmAXL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="investing" data-rating="4.8" data-price="16.49" data-sales="3560">
+                    <div class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 10
+                    </div>
+                    <img src="IMG/The-Little-Book-of-Common-Sense-Investing.jpg" alt="The Little Book of Common Sense Investing" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-blue-600 font-semibold">Investing</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Little Book of Common Sense Investing</h3>
+                        <p class="text-sm text-gray-600 mt-1">John C. Bogle</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(3,560)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$16.49</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="4" 
+                                    data-title="The Little Book of Common Sense Investing" 
+                                    data-price="16.49" 
+                                    data-image="https://m.media-amazon.com/images/I/81N7FmJha+L._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 5 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="entrepreneurship" data-rating="4.6" data-price="13.99" data-sales="3420">
+                    <div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 20
+                    </div>
+                    <img src="IMG/The-Millionaire-Fastlane.jpg" alt="The Millionaire Fastlane" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-purple-600 font-semibold">Entrepreneurship</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Millionaire Fastlane</h3>
+                        <p class="text-sm text-gray-600 mt-1">MJ DeMarco</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(3,420)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$13.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="5" 
+                                    data-title="The Millionaire Fastlane" 
+                                    data-price="13.99" 
+                                    data-image="https://m.media-amazon.com/images/I/71T5HXwGvEL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 6 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="mindset" data-rating="4.7" data-price="15.99" data-sales="3210">
+                    <div class="absolute top-2 left-2 bg-pink-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 20
+                    </div>
+                    <img src="IMG/think-and-grow-rich.jpg" alt="Think and Grow Rich" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-red-600 font-semibold">Mindset</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">Think and Grow Rich</h3>
+                        <p class="text-sm text-gray-600 mt-1">Napoleon Hill</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(3,210)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$15.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="6" 
+                                    data-title="Think and Grow Rich" 
+                                    data-price="15.99" 
+                                    data-image="https://m.media-amazon.com/images/I/71Pw3zqW1xL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 7 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="finance" data-rating="4.4" data-price="11.49" data-sales="2980">
+                    <div class="absolute top-2 left-2 bg-indigo-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 25
+                    </div>
+                    <img src="IMG/Your-Money-or-Your-Life.jpg" alt="Your Money or Your Life" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-green-600 font-semibold">Personal Finance</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">Your Money or Your Life</h3>
+                        <p class="text-sm text-gray-600 mt-1">Vicki Robin</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,980)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$11.49</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text极速赛车开奖直播官网-sm" 
+                                    data-id="7" 
+                                    data-title="Your Money or Your Life" 
+                                    data-price="11.49" 
+                                    data-image="https://m.media-amazon.com/images/I/71XW0rlr6GL._AC极速赛车开奖直播官网_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 8 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="investing" data-rating="4.9" data-price="22.99" data-sales="2870">
+                    <div class="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 25
+                    </div>
+                    <img src="IMG/The-Essays-of-Warren-Buffett.jpg" alt="The Essays of Warren Buffett" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-blue-600 font-semibold">Investing</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Essays of Warren Buffett</h3>
+                        <p class="text-sm text-gray-600 mt-1">Warren Buffett</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <极速赛车开奖直播官网i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,870)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$22.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="8" 
+                                    data-title="The Essays of Warren Buffett" 
+                                    data-price="22.99" 
+                                    data-image="https://m.media-amazon.com/images/I/81Lb75rUhFL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 9 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="economics" data-rating="4.5" data-price="19.99" data-sales="2650">
+                    <div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 30
+                    </div>
+                    <img src="IMG/Freakonomics.jpg" alt="Freakonomics" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-indigo-600 font-semibold">Economics</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">Freakonomics</h3>
+                        <p class="text-sm text-gray-600 mt-1">Steven D. Levitt</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,650)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$19.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="9" 
+                                    data-title="Freakonomics" 
+                                    data-price="19.99" 
+                                    data-image="https://m.media-amazon.com/images/I/71gD8WdSfAL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 10 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="retirement" data-rating="4.6" data-price="17.95" data-sales="2430">
+                    <div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 30
+                    </div>
+                    <img src="IMG/the-smple-path-to-wealth.jpg" alt="The Simple Path to Wealth" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-orange-600 font-semibold">Retirement</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Simple Path to Wealth</h3>
+                        <p class="text-sm text-gray-600 mt-1">JL Collins</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,430)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$17.95</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="10" 
+                                    data-title="The Simple Path to Wealth" 
+                                    data-price="17.95" 
+                                    data-image="https://m.media-amazon.com/images/I/81XkHjO5uFL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 11 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="finance" data-rating="4.3" data-price="10.99" data-sales="2310">
+                    <div class="absolute top-2 left-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 40
+                    </div>
+                    <img src="IMG/The-Automatic-Millionaire.jpg" alt="The Automatic Millionaire" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-green-600 font-semibold">Personal Finance</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">The Automatic Millionaire</h3>
+                        <p class="text-sm text-gray-600 mt-1">David Bach</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,310)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$10.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="11" 
+                                    data-title="The Automatic Millionaire" 
+                                    data-price="10.99" 
+                                    data-image="https://m.media-amazon.com/images/I/81vQjNLqJVL._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 12 -->
+                <div class="book-card bg-white rounded-lg shadow-md overflow-hidden transition duration-300 relative" data-category="investing" data-rating="4.8" data-price="24.99" data-sales="2180">
+                    <div class="absolute top-2 left-2 bg-purple-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Top 40
+                    </div>
+                    <img src="IMG/A-Random-Walk-Down-Wall-Street.jpg" alt="A Random Walk Down Wall Street" class="w-full h-64 object-contain p-4">
+                    <div class="p-4">
+                        <span class="text-xs text-blue-600 font-semibold">Investing</span>
+                        <h3 class="text-lg font-bold text-gray-800 mt-1">A Random Walk Down Wall Street</h3>
+                        <p class="text-sm text-gray-600 mt-1">Burton G. Malkiel</p>
+                        <div class="flex items-center mt-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-xs ml-1">(2,180)</span>
+                        </div>
+                        <div class="mt-3 flex justify-between items-center">
+                            <span class="text-lg font-bold text-green-600">$24.99</span>
+                            <button class="add-to-cart bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-full text-sm" 
+                                    data-id="12" 
+                                    data-title="A Random Walk Down Wall Street" 
+                                    data-price="24.99" 
+                                    data-image="https://m.media-amazon.com/images/I/81N4qCjA-5L._AC_UF1000,1000_QL80_.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-center mt-12">
+                <nav class="inline-flex rounded-md shadow">
+                    <a href="#" class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="#" class="px-4 py-2 border-t border-b border-gray-300 bg-white text-green-600 font-medium">1</a>
+                    <a href="#" class="px-4 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">2</a>
+                    <a href="#" class="px-4 py-2 border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">3</a>
+                    <a href="#" class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-500 hover:bg-gray-50">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">WealthWise Books</h3>
+                    <p class="text-gray-400">Your trusted source for financial wisdom and wealth-building knowledge.</p>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bestsellers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">New Releases</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Categories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Customer Service</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Returns & Refunds</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to get updates on new releases and special offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l text-gray-800 focus:outline-none">
+                        <button class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded-r">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 WealthWise Books. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+<script src="JS/bestsellers.js" ></script>
+</html>
