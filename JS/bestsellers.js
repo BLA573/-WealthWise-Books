@@ -1,5 +1,5 @@
 
-        // Cart functionality
+
         let cart = [];
         let cartCount = 0;
         let cartTotal = 0;
@@ -18,14 +18,14 @@
         const notificationMessage = document.getElementById('notificationMessage');
         const addToCartButtons = document.querySelectorAll('.add-to-cart');
 
-        // Open cart sidebar
+
         cartButton.addEventListener('click', () => {
             cartSidebar.classList.add('open');
             cartOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
 
-        // Close cart sidebar
+     
         closeCart.addEventListener('click', () => {
             cartSidebar.classList.remove('open');
             cartOverlay.classList.remove('active');
@@ -62,11 +62,9 @@
                     });
                 }
 
-                // Update cart count
                 cartCount += 1;
                 cartCountElement.textContent = cartCount;
 
-                // Update cart total
                 cartTotal += price;
                 cartSubtotal.textContent = `$${cartTotal.toFixed(2)}`;
                 cartTotalElement.textContent = `$${cartTotal.toFixed(2)}`;

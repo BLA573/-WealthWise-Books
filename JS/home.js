@@ -79,7 +79,6 @@
                 });
             });
             
-            // Update cart UI
             function updateCart() {
                 // Update cart count
                 const totalItems = cart.reduce((total, item) => total + item.quantity, 0);

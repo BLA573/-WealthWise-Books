@@ -1,5 +1,5 @@
 
-        // Cart functionality
+
         let cart = [];
         let cartCount = 0;
         let cartTotal = 0;
